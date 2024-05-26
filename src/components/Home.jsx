@@ -52,11 +52,18 @@ const Home=()=>{
         setViewProperty(false)
         setViewModal(false)
     }
-    
+    const logoutHandler=()=>{
+        localStorage.removeItem("token")
+        localStorage.removeItem("id")
+        navigate("/signin")
+    }
     
     return (
         <div className={styles.container}>
             {visibility ? <div className={styles.container}>
+                <div className={styles.logoutbutton}>
+                    <button onClick={logoutHandler } className={styles.button}>Logout</button>
+                </div>
                 <h1 className={styles.heading}>Home</h1>
                 <div className={styles.buttons}>
                     <button onClick={SellerHandlerTrue} className={styles.button}>Rent property</button>

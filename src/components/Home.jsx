@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import MyProperties from "./MyProperties"
 import AddPlace from "./AddPlace"
 import ViewProperties from "./ViewProperties"
+import styles from './Home.module.css'
 const Home=()=>{
     const [visibility, setVisibility] = useState(false)
     const navigate=useNavigate()
@@ -13,11 +14,15 @@ const Home=()=>{
     useEffect(() => {
         const auth=async()=>{
             try{
+                if(!localStorage.getItem("token")) {
+                    return navigate("/signin")
+                }
                 const response=await axios.get(`${baseUrl}/api/users/current`,{
                     headers:{
                         Authorization: `Bearer ${localStorage.getItem("token")}`
                     }
                 })
+                
                 setVisibility(true)
             }
             catch(error){
@@ -29,24 +34,44 @@ const Home=()=>{
     },[])
     const [viewModal, setViewModal] = useState(false);
     const [viewProperty, setViewProperty] = useState(false);
-    const SellerHandler=()=>{
+    const [myProperties, setMyProperties] = useState(false);
+    const SellerHandlerTrue=()=>{
         setViewModal(true)
+        setMyProperties(false)
+        setViewProperty(false)
     }
-    const buyerHandler=()=>{
+    
+    const viewPropertyTrue=()=>{
         setViewProperty(true)
+        setMyProperties(false)
+        setViewModal(false)
     }
+    
+    const myPropertiesTrue=()=>{
+        setMyProperties(true)
+        setViewProperty(false)
+        setViewModal(false)
+    }
+    
+    
     return (
-        <>
-            {visibility ? <div>
-                <h1>Home</h1>
-                <button onClick={SellerHandler}>Rent a property</button>
-                {viewModal && <AddPlace></AddPlace>}
-                <button onClick={buyerHandler}>View property</button>
-
-                <MyProperties></MyProperties>
+        <div className={styles.container}>
+            {visibility ? <div className={styles.container}>
+                <h1 className={styles.heading}>Home</h1>
+                <div className={styles.buttons}>
+                    <button onClick={SellerHandlerTrue} className={styles.button}>Rent property</button>
+                    
+                    <button onClick={viewPropertyTrue} className={styles.button}>View property</button>
+                    
+                    <button onClick={myPropertiesTrue} className={styles.button}>My properties</button>
+                    
+                </div>
+                {viewModal && <AddPlace ></AddPlace>}
                 {viewProperty && <ViewProperties></ViewProperties>}
+                {myProperties && <MyProperties ></MyProperties>}
+                   
             </div> : null}
-        </>
+        </div>
         
     )  
 }

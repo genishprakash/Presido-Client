@@ -1,0 +1,18 @@
+.card{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width:300px;
+    gap:20px;
+}
+.card p{
+    font-size: large;
+}
+.card h1{
+    font-size: x-large;
+}
+.card button{
+    padding: 10px;
+    border-radius: 10px;
+    border:none;
+}

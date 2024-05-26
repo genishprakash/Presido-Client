@@ -1,0 +1,26 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: center;
+    gap: 10px;
+}
+.label,.input{
+    font-size: 2rem;
+}
+
+.btn{
+    padding:10px;
+    font-size: 2rem;
+    
+    
+    border:none;
+    
+    cursor: pointer;
+}
+.buttons{
+    display: flex;
+    gap:20px;
+    align-items: center;
+    justify-content:center ;
+}

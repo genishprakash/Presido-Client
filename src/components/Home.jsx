@@ -21,8 +21,8 @@ const Home=()=>{
                 setVisibility(true)
             }
             catch(error){
+                navigate("/signin")
                 setVisibility(false)
-                navigate("/login")
             }
         }
         auth()

@@ -8,6 +8,7 @@ import Signup from './components/Signup';
 import { useDispatch } from 'react-redux';
 import { setBaseUrl } from './store/baseUrlSlice';
 import { useEffect } from 'react';
+import Signin from './components/Signin';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
 
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/signin" element={<Signin />}></Route>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
     </Routes>

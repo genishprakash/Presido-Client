@@ -21,11 +21,11 @@ const Signup = () => {
             password,
             
         }
-        console.log(data);
+        
         try{
 
             const response= await axios.post(`${baseUrl}/api/users/register`, data)
-            console.log(response);
+            console.log(response)
             navigate("/login");
         }   
         catch{

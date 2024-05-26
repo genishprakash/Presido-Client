@@ -27,7 +27,13 @@ const AddPlace = (props) => {
         }
         try{
             const response =await axios.post(`${baseUrl}/api/properties`, data)
-            console.log(Success);
+            console.log("Successfully added property", response.data);
+            setTitle("");
+            setDescription("");
+            setPrice("");
+            setLocation("");
+            setBedrooms("");
+            setBathrooms("");
         }
         catch(err){
             console.log(err);

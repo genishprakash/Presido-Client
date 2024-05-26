@@ -1,0 +1,30 @@
+name: Deploy React Application
+
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+      - name: Login to docker hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}     
+      - name: Build Docker Image
+        run: docker build -t genishprakash/rental-frontend --build-arg VITE_REACT_APP_NODE_ENV='production' --build-arg VITE_REACT_APP_SERVER_BASE_URL='${{ secrets.VITE_REACT_APP_SERVER_BASE_URL }}'  .
+      - name: Publish Image to docker hub
+        run: docker push genishprakash/rental-frontend:latest 
+ 
+  deploy:
+    needs: build
+    runs-on: self-hosted 
+    steps:
+      - name: Pull image from docker hub
+        run: docker pull genishprakash/rental-frontend:latest 
+      - name: Delete old container
+        run: docker rm -f rental-frontend-container
+      - name: Run Docker Container
+        run: docker run -d -p 3000:80 --name rental-frontend-container genishprakash/rental-frontend

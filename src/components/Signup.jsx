@@ -3,14 +3,14 @@ import styles from './SignUp.module.css'
 import { useState } from "react";
 import axios from "axios";
 import {useSelector} from "react-redux";
-
+import { useNavigate } from "react-router-dom";
 const Signup = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [phoneNo, setPhoneNo] = useState("");
     const [password, setPassword] = useState("");
-  
+    const navigate = useNavigate();
     const baseUrl = useSelector((state) => state.baseUrl.baseUrl);
     const  submitHandler =async (event) => {
         event.preventDefault();
@@ -26,7 +26,8 @@ const Signup = () => {
 
             const response= await axios.post(`${baseUrl}/api/users/register`, data)
             console.log(response);
-        }
+            navigate("/login");
+        }   
         catch{
             console.error(error.message);
         }
